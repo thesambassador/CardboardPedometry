@@ -47,7 +47,7 @@ public class GazeInputModule : BaseInputModule {
   [HideInInspector]
   public Vector2 hotspot = new Vector2(0.5f, 0.5f);
 
-  private PointerEventData pointerData;
+  public PointerEventData pointerData;
 
   public override bool ShouldActivateModule() {
     if (!base.ShouldActivateModule()) {
