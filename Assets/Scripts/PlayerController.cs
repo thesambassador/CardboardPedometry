@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Security.Cryptography;
 
 public class PlayerController : MonoBehaviour
 {
 
     public Transform cardboardHead;
     public LineRenderer laser;
+    public PIDController controller;
 
     private Rigidbody rigidbody;
 
-    private float timeSinceLastStep = 0f;
+    private float timeSinceLastStep = 5f;
 
-    private Vector3 currentForce = new Vector3();
-    public float forwardVelocity = 40;
+    public float maxForwardVelocity = 8;
+    public float minForwardVelocity = 1;
 
-    private float maxVelocity = 10;
+    private float curVel = 0;
 
     public Transform gazePointer;
 
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(Input.compass.rawVector.magnitude);
+        //Debug.Log(Input.compass.rawVector.magnitude);
         Vector3 currentRotation = transform.eulerAngles;
         currentRotation.y = cardboardHead.rotation.eulerAngles.y;
         transform.eulerAngles = currentRotation;
@@ -75,39 +77,47 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            OnStepDetected();
+        }
+        timeSinceLastStep += Time.fixedDeltaTime;
 
         if (timeSinceLastStep > 1)
         {
-            currentForce.Set(0, 0, 0);
+            controller.targetVelocity.Set(0, 0, 0);
         }
-
-        Vector3 localVel = transform.InverseTransformDirection(rigidbody.velocity);
-
-        if (localVel.z > maxVelocity)
-            currentForce.Set(0, 0, 0);
-
-        if (Mathf.Abs(localVel.x) > .1)
+        else
         {
-
-    
+            if(curVel > 0)
+                curVel -= .1f;
+            if (curVel < 0)
+                curVel = 0;
+            controller.targetVelocity.Set(0, 0, curVel);
         }
 
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            currentForce.z = 10;
-        }
+        
 
-        rigidbody.AddRelativeForce(currentForce);
-
-        timeSinceLastStep += Time.fixedDeltaTime;
+        
     }
 
     void OnStepDetected()
     {
-        float forceVal = forwardVelocity * (.5f / timeSinceLastStep);
+        Debug.Log("Time since last step: " + timeSinceLastStep);
+        if (timeSinceLastStep > 1)
+            curVel = minForwardVelocity;
+        else if (timeSinceLastStep < .2)
+            curVel = maxForwardVelocity;
+        else
+        {
+            float slope = (minForwardVelocity - maxForwardVelocity)/.8f;
+            float yintercept = -slope + minForwardVelocity;
+            Debug.Log("Slope: " + slope + " Yint: " + yintercept);
+            curVel = timeSinceLastStep * slope + yintercept;
+        }
 
-        currentForce.Set(0 , 0, forceVal);
+
+        controller.targetVelocity.Set(0, 0, curVel);
 
         timeSinceLastStep = 0;
     }

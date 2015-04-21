@@ -345,6 +345,31 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8930092ecdce524a88f82243ca09900, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &250778952
+GameObject:
+  m_PrefabParentObject: {fileID: 126558, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+  m_PrefabInternal: {fileID: 2063251099}
+--- !u!114 &250778956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 250778952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e69ba4af16417498c8917efbdc3daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cP: 30
+  cI: .5
+  cD: 0
+  axisEnabled: {x: 1, y: 0, z: 1}
+  runForce: 40
+  minForce: {x: -100, y: 0, z: -100}
+  maxForce: {x: 100, y: 0, z: 100}
+  targetVelocity: {x: 0, y: 0, z: 0}
+  on: 1
+  local: 1
 --- !u!1001 &258128379
 Prefab:
   m_ObjectHideFlags: 0
@@ -833,10 +858,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 188642, guid: df2d5e68b0021864eb151a317bea7880, type: 2}
+  collectiblePrefab: {fileID: 178504, guid: 1fed4745c0b65d745a6f57c2529f7fc9, type: 2}
   playerObject: {fileID: 391975525}
   spawnTimer: 5
   spawnTime: 5
   curEnemies: 0
+  curCollectibles: 0
+  collected: 0
   maxEnemies: 10
 --- !u!1001 &626229513
 Prefab:
@@ -2350,81 +2378,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8930092ecdce524a88f82243ca09900, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1712846100
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1712846104}
-  - 33: {fileID: 1712846103}
-  - 23: {fileID: 1712846102}
-  - 111: {fileID: 1712846101}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!111 &1712846101
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1712846100}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!23 &1712846102
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1712846100}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 957c8bbb5833f76449189ac15be0aaad, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!33 &1712846103
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1712846100}
-  m_Mesh: {fileID: 4300006, guid: e7d99c483b102a74496f625ec0f5aa7c, type: 3}
---- !u!4 &1712846104
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1712846100}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.75, z: .00650000572}
-  m_LocalScale: {x: .75, y: .75, z: .75}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
 --- !u!1001 &1775519495
 Prefab:
   m_ObjectHideFlags: 0
@@ -3101,6 +3054,18 @@ Prefab:
     - target: {fileID: 150070, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11407626, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 250778956}
+    - target: {fileID: 11407626, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+      propertyPath: maxForwardVelocity
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 126558, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
