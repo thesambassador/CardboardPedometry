@@ -21,7 +21,11 @@ public class PlayerController : MonoBehaviour
     public Transform gazePointer;
 
     private float laserLength = 0;
-    private float laserSpeed = 100f;
+    private float laserSpeed = 120f;
+
+    private bool magnetCalibrated = false;
+
+    private float magnetThreshold = 2400;
 
 	// Use this for initialization
 	void Start ()
@@ -40,13 +44,19 @@ public class PlayerController : MonoBehaviour
         transform.eulerAngles = currentRotation;
 
         UpdateLaser();
+
+        if(!magnetCalibrated && Vector3.Dot(cardboardHead.transform.forward, Vector3.down) > .95)
+        {
+            magnetThreshold = Input.compass.rawVector.magnitude - 100;
+        }
     }
 
     void UpdateLaser()
     {
         if (laser != null)
         {
-            if (Input.GetMouseButton(0) || Input.compass.rawVector.magnitude > 2400)
+            //Debug.Log(Input.compass.rawVector.magnitude);
+            if (Input.GetMouseButton(0) || Input.compass.rawVector.magnitude > magnetThreshold)
             {
                 laserLength += laserSpeed*Time.deltaTime;
                 laser.enabled = true;
@@ -103,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
     void OnStepDetected()
     {
-        Debug.Log("Time since last step: " + timeSinceLastStep);
+        //Debug.Log("Time since last step: " + timeSinceLastStep);
         if (timeSinceLastStep > 1)
             curVel = minForwardVelocity;
         else if (timeSinceLastStep < .2)
@@ -112,7 +122,7 @@ public class PlayerController : MonoBehaviour
         {
             float slope = (minForwardVelocity - maxForwardVelocity)/.8f;
             float yintercept = -slope + minForwardVelocity;
-            Debug.Log("Slope: " + slope + " Yint: " + yintercept);
+            //Debug.Log("Slope: " + slope + " Yint: " + yintercept);
             curVel = timeSinceLastStep * slope + yintercept;
         }
 

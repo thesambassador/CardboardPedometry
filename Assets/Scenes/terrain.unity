@@ -1369,18 +1369,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 9542172, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 529f594fa0e96495a956b8541597795c, type: 2}
-    - target: {fileID: 11402702, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 955127921}
-    - target: {fileID: 9515914, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 529f594fa0e96495a956b8541597795c, type: 2}
+    - target: {fileID: 2016862, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: .653654873
+      objectReference: {fileID: 0}
+    - target: {fileID: 2016862, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: .805810869
+      objectReference: {fileID: 0}
+    - target: {fileID: 2016862, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: .95588237
+      objectReference: {fileID: 0}
+    - target: {fileID: 2016862, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03fbb36520088264bb2b597ea065040e, type: 2}
   m_IsPrefabParent: 0
